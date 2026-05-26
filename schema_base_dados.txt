@@ -1,0 +1,172 @@
+CREATE TABLE DadosPessoais (
+  matricula INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  nome VARCHAR(100)  NULL  ,
+  email VARCHAR(60)  NULL  ,
+  celular VARCHAR(14)  NULL  ,
+  data_nascimento DATE  NULL    ,
+PRIMARY KEY(matricula));
+
+
+
+CREATE TABLE usuarios (
+  id INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
+  nome VARCHAR(100)  NULL  ,
+  endereco VARCHAR(200)  NULL  ,
+  telefone VARCHAR(14)  NULL  ,
+  email VARCHAR(60)  NULL  ,
+  status INTEGER UNSIGNED  NULL    ,
+PRIMARY KEY(id));
+
+
+
+CREATE TABLE Profissao (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  area_atuacao VARCHAR(60)  NULL  ,
+  cargo VARCHAR(60)  NULL  ,
+  regime_trabalho VARCHAR(60)  NULL  ,
+  renda_mensal DECIMAL(10,2)  NULL    ,
+INDEX profissao_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+CREATE TABLE Moradia (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  tipo VARCHAR(15)  NULL  ,
+  bairro VARCHAR(60)  NULL  ,
+  cidade VARCHAR(50)  NULL  ,
+  distancia_faculdade DECIMAL(5,2)  NULL  ,
+  mora_quem VARCHAR(60)  NULL  ,
+  propria INTEGER UNSIGNED  NULL    ,
+INDEX moradia_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+
+CREATE TABLE Transporte (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  meio_princ_locomo VARCHAR(15)  NULL  ,
+  tempo_desloc_facul VARCHAR(10)  NULL  ,
+  veiculo_proprio INTEGER UNSIGNED  NULL  ,
+  tempo_transt_diario DECIMAL(6,2)  NULL    ,
+INDEX transporte_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+
+CREATE TABLE SatisfacaoCurso (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  nota_satisfacao INTEGER UNSIGNED  NULL  ,
+  principal_motivacao VARCHAR(150)  NULL  ,
+  sugestao_melhoria VARCHAR(150)  NULL  ,
+  intencao_pos_graduacao VARCHAR(100)  NULL    ,
+INDEX SatisfacaoCurso_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+CREATE TABLE Midia (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  streaming_favorito VARCHAR(25)  NULL  ,
+  freq_uso_redes_sociais DECIMAL(4,2)  NULL  ,
+  meio_principal_noticias VARCHAR(35)  NULL  ,
+  comunicao_digital_principal VARCHAR(40)  NULL    ,
+INDEX Midia_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+CREATE TABLE FocoCarreira (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  area_maior_interesse VARCHAR(60)  NULL  ,
+  tecnologia_favorita VARCHAR(100)  NULL  ,
+  previsao_salario_inicial DECIMAL(8,2)  NULL  ,
+  area_nao_gosta VARCHAR(60)  NULL    ,
+INDEX focoCarreira_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+CREATE TABLE BemEstar (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  horas_sono DECIMAL(4,2)  NULL  ,
+  pratica_exercicios INTEGER UNSIGNED  NULL  ,
+  nivel_stress INTEGER UNSIGNED  NULL  ,
+  atividade_relaxante INTEGER UNSIGNED  NULL    ,
+INDEX BemEstar_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+
+
+
+CREATE TABLE HistoricoEscolar (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  tipo_ensino VARCHAR(60)  NULL  ,
+  ano_desde_ensino_medio INTEGER UNSIGNED  NULL  ,
+  fez_cursinho INTEGER UNSIGNED  NULL  ,
+  possui_bolsa INTEGER UNSIGNED  NULL    ,
+INDEX HistoricoEscolar_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+
+
+CREATE TABLE login (
+  usuario INTEGER UNSIGNED  NOT NULL  ,
+  senha VARCHAR(45)  NULL  ,
+  perfil VARCHAR(15)  NULL  ,
+  data DATE  NULL  ,
+  hora TIME  NULL  ,
+  host VARCHAR(18)  NULL    ,
+INDEX login_FKIndex1(usuario),
+  FOREIGN KEY(usuario)
+    REFERENCES usuarios(id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+CREATE TABLE Hobbies (
+  estudante INTEGER UNSIGNED  NOT NULL  ,
+  principal_hobbie VARCHAR(100)  NULL  ,
+  tempo_gasto_hobbie VARCHAR(10)  NULL  ,
+  pratica_esportes INTEGER UNSIGNED  NULL  ,
+  qual_esporte VARCHAR(50)  NULL    ,
+INDEX Hobbies_FKIndex1(estudante),
+  FOREIGN KEY(estudante)
+    REFERENCES DadosPessoais(matricula)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+
+
+
+
