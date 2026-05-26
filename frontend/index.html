@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coleta de Dados Pessoais</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body class="hold-transition login-page">
+    <div class="login-box" style="width: 500px">
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <a href="#" class="h1"><b>Sistema</b>Censo</a>
+        </div>
+        <div class="card-body">
+          <p class="login-box-msg">
+            Insira seus dados pessoais para prosseguir
+          </p>
+
+          <form id="formDadosPessoais">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="nome"
+                placeholder="Nome Completo"
+                required
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="E-mail"
+                required
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="celular"
+                placeholder="Celular (Apenas números)"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-phone"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <input type="date" class="form-control" id="data_nascimento" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-calendar"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block">
+                  Salvar e Continuar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("formDadosPessoais")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Monta o payload em JSON
+          const payload = {
+            nome: document.getElementById("nome").value,
+            email: document.getElementById("email").value,
+            celular: document.getElementById("celular").value,
+            data_nascimento: document.getElementById("data_nascimento").value,
+          };
+
+          // Faz a chamada para a sua API PHP
+          fetch("../api/index.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.matricula) {
+                alert("Dados gravados com sucesso! Redirecionando...");
+
+                // REDIRECIONAMENTO PARA O PRÓXIMO MICROSSERVIÇO
+                // Se o próximo grupo for o de "Moradia" ou "Profissao", passe a matrícula recém-gerada na URL ou salve em LocalStorage para eles capturarem.
+                const proximaUrl = `http://endereco-do-outro-grupo/formulario2.html?matricula=${data.matricula}`;
+                window.location.href = proximaUrl;
+              } else {
+                alert("Erro: " + data.mensagem);
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Ocorreu um erro na comunicação com a API.");
+            });
+        });
+    </script>
+  </body>
+</html>
