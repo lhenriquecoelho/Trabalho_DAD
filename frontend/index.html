@@ -115,12 +115,11 @@
             .then((response) => response.json())
             .then((data) => {
               if (data.matricula) {
-                alert("Dados gravados com sucesso! Redirecionando...");
+                alert("Dados gravados com sucesso!");
 
-                // REDIRECIONAMENTO PARA O PRÓXIMO MICROSSERVIÇO
-                // Se o próximo grupo for o de "Moradia" ou "Profissao", passe a matrícula recém-gerada na URL ou salve em LocalStorage para eles capturarem.
-                const proximaUrl = `http://endereco-do-outro-grupo/formulario2.html?matricula=${data.matricula}`;
-                window.location.href = proximaUrl;
+              window.location.href =
+              `http://IP-DELES/NOME-DO-PROJETO-DELES/PAGINA-DELES?matricula=${data.matricula}`;
+
               } else {
                 alert("Erro: " + data.mensagem);
               }
