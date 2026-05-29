@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $db_name = "bd_censo";
-$username = "root"; // Altere para seu usuário
-$password = "";     // Altere para sua senha
+$username = "root"; 
+$password = "";     
 
 try {
     $conn = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
